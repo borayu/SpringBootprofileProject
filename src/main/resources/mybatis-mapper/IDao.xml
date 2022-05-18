@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.javabora.profile_web.dao.IDao">
+
+	<!-- board SQL -->	
+	<select id="listDao" resultType="com.javabora.profile_web.dto.BoardDto">
+		SELECT * FROM q_board ORDER BY qnum DESC
+	</select>
+	
+	<insert id="writeDao">
+		INSERT INTO q_board(qnum, qid, qname, qcontent, qemail) VALUES (q_board_seq.nextval, #{param1}, #{param2}, #{param3}, #{param4})
+	</insert>
+	
+	<select id="viewDao" resultType="com.javabora.profile_web.dto.BoardDto">
+		SELECT * FROM q_board WHERE qnum = #{param1}
+	</select>
+	
+	<delete id="deleteDao">
+		DELETE FROM q_board WHERE qnum = #{param1}
+	</delete>
+	
+	<update id="modifyDao">
+		UPDATE q_board SET qname=#{param1}, qcontent=#{param2}, qemail=#{param3} WHERE qnum=#{param4}
+	</update>
+	
+	<!-- member SQL -->
+	<insert id="joinDao">
+		INSERT INTO pmember (mid, mpw, mname, memail) VALUES (#{param1}, #{param2}, #{param3}, #{param4})
+	</insert>
+	
+	<select id="loginOkDao" resultType="com.javabora.profile_web.dto.MemberDto">
+		SELECT * FROM pmember WHERE mid = #{param1}
+	</select>
+	
+	<select id="checkIdDao" resultType="int">
+		SELECT COUNT(*) FROM pmember WHERE mid = #{param1}
+	</select>
+	
+	<select id="checkPwDao" resultType="int">
+		SELECT COUNT(*) FROM pmember WHERE mid = #{param1} AND mpw = #{param2}
+	</select>
+	
+	<update id="memberInfoModifyOkDao">
+		UPDATE pmember SET mpw = #{param1}, mname = #{param2}, memail = #{param3} WHERE mid = #{param4}
+	</update>
+
+</mapper>
